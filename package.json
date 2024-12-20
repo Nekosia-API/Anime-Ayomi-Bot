@@ -11,11 +11,11 @@
   ],
   "homepage": "https://nekosia.cat",
   "bugs": {
-    "url": "https://github.com/Nekosia-API/ayomi-discord-bot/issues"
+    "url": "https://github.com/Nekosia-API/Anime-Ayomi-Bot/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nekosia-API/ayomi-discord-bot.git"
+    "url": "git+https://github.com/Nekosia-API/Anime-Ayomi-Bot.git"
   },
   "license": "CC BY-NC-SA",
   "author": "Sefinek <contact@nekosia.cat> (https://sefinek.net)",
