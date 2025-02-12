@@ -4,7 +4,7 @@ const fetchImage = require('../../scripts/fetchImage.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('valentine')
-		.setDescription('Get an image of characters in a Valentine's Day theme.')
+		.setDescription('Get an image of characters in a Valentine\'s Day theme.')
 		.addIntegerOption(option =>
 			option.setName('count')
 				.setDescription('How many adorable images would you like? (1 to 5)')
