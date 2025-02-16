@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/Nekosia-API/Anime-Ayomi-Bot.git"
   },
-  "license": "CC BY-NC-SA",
+  "license": "CC-BY-NC-SA-4.0",
   "author": "Sefinek <contact@nekosia.cat> (https://sefinek.net)",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,6 @@
   "devDependencies": {
     "@eslint/js": "^9.20.0",
     "discord-api-types": "^0.37.119",
-    "globals": "^15.14.0"
+    "globals": "^15.15.0"
   }
 }
