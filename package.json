@@ -2,13 +2,6 @@
   "name": "ayomi",
   "version": "1.0.6",
   "description": "Anime bot for Discord servers.",
-  "keywords": [
-    "discord",
-    "bot",
-    "ayomi",
-    "anime",
-    "anime bot"
-  ],
   "homepage": "https://nekosia.cat",
   "bugs": {
     "url": "https://github.com/Nekosia-API/Anime-Ayomi-Bot/issues"
