@@ -1,6 +1,6 @@
 {
   "name": "ayomi",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Anime bot for Discord servers.",
   "keywords": [
     "discord",
@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/Nekosia-API/Anime-Ayomi-Bot.git"
   },
-  "license": "CC-BY-NC-SA-4.0",
+  "license": "MIT",
   "author": "Sefinek <contact@nekosia.cat> (https://sefinek.net)",
   "main": "index.js",
   "scripts": {
