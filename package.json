@@ -1,6 +1,6 @@
 {
   "name": "ayomi",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Anime bot for Discord servers.",
   "homepage": "https://nekosia.cat",
   "bugs": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/Nekosia-API/Anime-Ayomi-Bot.git"
   },
   "license": "MIT",
-  "author": "Sefinek <contact@nekosia.cat> (https://sefinek.net)",
+  "author": "Sefinek <contact@nekosia.cat> (https://nekosia.cat)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
