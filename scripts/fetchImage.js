@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, MessageFlags } = require('discord.js');
 const axios = require('../services/axios.js');
 const sendError = require('./error.js');
 
@@ -18,7 +18,7 @@ module.exports = async (inter, category) => {
 		if (timeElapsed < cooldownTime) {
 			return inter.reply({
 				content: `⏰  Please wait another ${(cooldownTime - timeElapsed) / 1000}s before using this command again.`,
-				ephemeral: true,
+				ephemeral: MessageFlags.Ephemeral,
 			});
 		}
 	}
