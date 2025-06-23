@@ -2,20 +2,20 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fetchImage = require('../../scripts/fetchImage.js');
 
 const choices = [
-	{ name: 'Cat Ears Hat', value: 'cat-ears-hat' },
-	{ name: 'Cat Ears Headband', value: 'cat-ears-headband' },
-	{ name: 'Cat Ears Headphones', value: 'cat-ears-headphones' },
-	{ name: 'Cat Ears Hoodie', value: 'cat-ears-hoodie' },
-	{ name: 'Cat Ears Maid', value: 'cat-ears-maid' },
+	{ name: 'Smug Face', value: 'smug-face' },
+	{ name: 'Wink', value: 'wink' },
+	{ name: 'Blushing', value: 'blushing' },
+	{ name: 'Happy', value: 'happy' },
+	{ name: 'Confused', value: 'confused' },
 ];
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('cat-ears')
-		.setDescription('Get an image of anime characters featuring cat ears.')
+		.setName('smile')
+		.setDescription('Get an image of anime characters with a specific facial expression.')
 		.addStringOption(option =>
-			option.setName('type')
-				.setDescription('Choose the cat ears style.')
+			option.setName('expression')
+				.setDescription('Choose the facial expression.')
 				.addChoices(...choices))
 		.addIntegerOption(option =>
 			option.setName('count')
@@ -28,7 +28,7 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.AttachFiles),
 
 	execute: async (_, inter) => {
-		const tag = inter.options.getString('type') || 'cat-ears';
+		const tag = inter.options.getString('expression') || 'smile';
 		await fetchImage(inter, tag);
 	},
 };

@@ -1,10 +1,19 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fetchImage = require('../../scripts/fetchImage.js');
 
+const choices = [
+	{ name: 'Bewitching Thighs', value: 'bewitching-thighs' },
+	{ name: 'Plump Thighs', value: 'plump-thighs' },
+];
+
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('long-hair')
-		.setDescription('Get an image of characters with long hair.')
+		.setName('thighs')
+		.setDescription('Get an image of anime characters focusing on thighs.')
+		.addStringOption(option =>
+			option.setName('type')
+				.setDescription('Choose the thighs style.')
+				.addChoices(...choices))
 		.addIntegerOption(option =>
 			option.setName('count')
 				.setDescription('How many adorable images would you like? (1 to 5)')
@@ -15,5 +24,8 @@ module.exports = {
 				.setDescription('Display compressed (lighter and faster-loading) images. Default: false'))
 		.setDefaultMemberPermissions(PermissionFlagsBits.AttachFiles),
 
-	execute: (_, inter) => fetchImage(inter, 'long-hair'),
+	execute: async (_, inter) => {
+		const tag = inter.options.getString('type') || 'thighs';
+		await fetchImage(inter, tag);
+	},
 };

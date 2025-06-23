@@ -3,8 +3,8 @@ const fetchImage = require('../../scripts/fetchImage.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('black-tights')
-		.setDescription('Get an image of anime characters wearing black tights.')
+		.setName('nail-polish')
+		.setDescription('Get a random anime image featuring girls with painted nails.')
 		.addIntegerOption(option =>
 			option.setName('count')
 				.setDescription('How many adorable images would you like? (1 to 5)')
@@ -15,5 +15,5 @@ module.exports = {
 				.setDescription('Display compressed (lighter and faster-loading) images. Default: false'))
 		.setDefaultMemberPermissions(PermissionFlagsBits.AttachFiles),
 
-	execute: (_, inter) => fetchImage(inter, 'black-tights'),
+	execute: (_, inter) => fetchImage(inter, 'nail-polish'),
 };

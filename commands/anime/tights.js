@@ -2,20 +2,17 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fetchImage = require('../../scripts/fetchImage.js');
 
 const choices = [
-	{ name: 'Cat Ears Hat', value: 'cat-ears-hat' },
-	{ name: 'Cat Ears Headband', value: 'cat-ears-headband' },
-	{ name: 'Cat Ears Headphones', value: 'cat-ears-headphones' },
-	{ name: 'Cat Ears Hoodie', value: 'cat-ears-hoodie' },
-	{ name: 'Cat Ears Maid', value: 'cat-ears-maid' },
+	{ name: 'Black Tights', value: 'black-tights' },
+	{ name: 'White Tights', value: 'white-tights' },
 ];
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('cat-ears')
-		.setDescription('Get an image of anime characters featuring cat ears.')
+		.setName('tights')
+		.setDescription('Get an image of anime characters wearing tights.')
 		.addStringOption(option =>
 			option.setName('type')
-				.setDescription('Choose the cat ears style.')
+				.setDescription('Choose the color/type of tights.')
 				.addChoices(...choices))
 		.addIntegerOption(option =>
 			option.setName('count')
@@ -28,7 +25,11 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.AttachFiles),
 
 	execute: async (_, inter) => {
-		const tag = inter.options.getString('type') || 'cat-ears';
+		let tag = inter.options.getString('tag');
+		if (!tag) {
+			const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+			tag = randomChoice.value;
+		}
 		await fetchImage(inter, tag);
 	},
 };

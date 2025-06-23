@@ -2,20 +2,19 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fetchImage = require('../../scripts/fetchImage.js');
 
 const choices = [
-	{ name: 'Cat Ears Hat', value: 'cat-ears-hat' },
-	{ name: 'Cat Ears Headband', value: 'cat-ears-headband' },
-	{ name: 'Cat Ears Headphones', value: 'cat-ears-headphones' },
-	{ name: 'Cat Ears Hoodie', value: 'cat-ears-hoodie' },
-	{ name: 'Cat Ears Maid', value: 'cat-ears-maid' },
+	{ name: 'Thigh-High Socks', value: 'thigh-high-socks' },
+	{ name: 'Black Thigh-High Socks', value: 'black-thigh-high-socks' },
+	{ name: 'White Thigh-High Socks', value: 'white-thigh-high-socks' },
+	{ name: 'Striped Thigh-High Socks', value: 'striped-thigh-high-socks' },
 ];
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('cat-ears')
-		.setDescription('Get an image of anime characters featuring cat ears.')
+		.setName('stockings')
+		.setDescription('Get an image of anime characters wearing stockings or thigh-high socks.')
 		.addStringOption(option =>
 			option.setName('type')
-				.setDescription('Choose the cat ears style.')
+				.setDescription('Choose the type or color of stockings.')
 				.addChoices(...choices))
 		.addIntegerOption(option =>
 			option.setName('count')
@@ -28,7 +27,11 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.AttachFiles),
 
 	execute: async (_, inter) => {
-		const tag = inter.options.getString('type') || 'cat-ears';
+		let tag = inter.options.getString('type');
+		if (!tag) {
+			const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+			tag = randomChoice.value;
+		}
 		await fetchImage(inter, tag);
 	},
 };
