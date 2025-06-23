@@ -12,7 +12,7 @@ module.exports = {
 				.setMaxValue(5))
 		.addBooleanOption(option =>
 			option.setName('compressed')
-				.setDescription('Would you like to see the images in a lighter, faster-loading version? (default: false)'))
+				.setDescription('Display compressed (lighter and faster-loading) images. Default: false'))
 		.setDefaultMemberPermissions(PermissionFlagsBits.AttachFiles),
 
 	execute: (_, inter) => fetchImage(inter, 'white-tights'),
