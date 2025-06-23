@@ -1,8 +1,8 @@
-const { EmbedBuilder } = require('discord.js');
+const { Events } = require('discord.js');
 const sendError = require('../scripts/error.js');
 
 module.exports = {
-	name: 'interactionCreate',
+	name: Events.InteractionCreate,
 	async execute(inter, client) {
 		if (!inter.isChatInputCommand() || !inter.guild) return;
 
@@ -12,9 +12,9 @@ module.exports = {
 		try {
 			await command.execute(client, inter);
 		} catch (err) {
-			sendError(EmbedBuilder, inter, err);
+			sendError(inter, err);
 		}
 
-		console.log(`SlashC » Interaction '${inter.commandName}' was triggered by ${inter.user.tag} (${inter.id}) on the server ${inter.guild.name} (${inter.guild.id})`);
+		console.log(`SlashC » Interaction '${inter.commandName}' was triggered by ${inter.user.tag} (${inter.id}) on the server '${inter.guild.name}' (${inter.guild.id})`);
 	},
 };

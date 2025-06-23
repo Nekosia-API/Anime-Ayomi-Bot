@@ -1,4 +1,6 @@
-module.exports = (EmbedBuilder, inter, err) => {
+const { EmbedBuilder } = require('discord.js');
+
+module.exports = (inter, err) => {
 	console.error('Client »', err);
 
 	const embed = new EmbedBuilder()

@@ -1,19 +1,15 @@
-const { join } = require('node:path');
-const { readdir } = require('node:fs/promises');
+const fs = require('node:fs');
+const path = require('node:path');
+const EVENTS_DIR = path.join(__dirname, '../events');
 
-module.exports = async (client) => {
-	try {
-		const eventFiles = (await readdir(join(__dirname, '..', 'events'))).filter(file => file.endsWith('.js'));
+module.exports = client => {
+	for (const file of fs.readdirSync(EVENTS_DIR)) {
+		if (!file.endsWith('.js')) continue;
 
-		for (const file of eventFiles) {
-			const event = require(join(__dirname, '..', 'events', file));
+		const event = require(path.join(EVENTS_DIR, file));
+		Object.freeze(event);
 
-			if (event.env === 'development') continue;
-
-			const handler = event.once ? 'once' : 'on';
-			client[handler](event.name, (...args) => event.execute(...args, client));
-		}
-	} catch (err) {
-		console.error('Error loading events:', err);
+		const handler = (...args) => event.execute(...args, client);
+		(event.once ? client.once : client.on).call(client, event.name, handler);
 	}
 };

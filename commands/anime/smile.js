@@ -1,9 +1,8 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const fetchImage = require('../../scripts/fetchImage.js');
+const fetchImage = require('../../services/fetchImage.js');
 
 const choices = [
 	{ name: 'Smug Face', value: 'smug-face' },
-	{ name: 'Wink', value: 'wink' },
 	{ name: 'Blushing', value: 'blushing' },
 	{ name: 'Happy', value: 'happy' },
 	{ name: 'Confused', value: 'confused' },

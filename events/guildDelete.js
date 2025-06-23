@@ -1,5 +1,7 @@
+const { Events } = require('discord.js');
+
 module.exports = {
-	name: 'guildDelete',
+	name: Events.GuildDelete,
 	async execute(server, client) {
 		if (!server.available) return;
 

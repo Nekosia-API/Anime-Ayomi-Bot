@@ -10,7 +10,7 @@ module.exports = {
 		const embed1 = new EmbedBuilder()
 			.setAuthor({ name: `List of available commands for ${client.user.username} bot (v${version})`, iconURL: client.user.displayAvatarURL() })
 			.setColor('#00FF72')
-			.setDescription('Please see https://nekosia.cat/ayomi/commands.');
+			.setDescription('Please see: https://nekosia.cat/ayomi/commands');
 
 		const embed2 = new EmbedBuilder()
 			.setColor('#09A1E2')

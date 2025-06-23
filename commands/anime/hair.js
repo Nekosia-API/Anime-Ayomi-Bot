@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const fetchImage = require('../../scripts/fetchImage.js');
+const fetchImage = require('../../services/fetchImage.js');
 
 const choices = [
 	// colors
@@ -18,7 +18,6 @@ const choices = [
 	// length
 	{ name: 'Long Hair', value: 'long-hair' },
 	{ name: 'Short Hair', value: 'short-hair' },
-	{ name: 'Medium Hair', value: 'medium-hair' },
 
 	// style
 	{ name: 'Twintails', value: 'twintails' },

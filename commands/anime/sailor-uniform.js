@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const fetchImage = require('../../scripts/fetchImage.js');
+const fetchImage = require('../../services/fetchImage.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()

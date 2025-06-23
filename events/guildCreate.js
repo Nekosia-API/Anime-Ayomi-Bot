@@ -1,7 +1,7 @@
-const { EmbedBuilder } = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
 
 module.exports = {
-	name: 'guildCreate',
+	name: Events.GuildCreate,
 	async execute(server, client) {
 		if (!server.available) return;
 
