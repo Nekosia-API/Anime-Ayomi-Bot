@@ -9,7 +9,7 @@ module.exports = (inter, err) => {
 			name: '❌ Sorry, something went wrong',
 			iconURL: inter.commandName ? inter.user.displayAvatarURL() : inter.author.displayAvatarURL(),
 		})
-		.setDescription('We sincerely apologize for the inconvenience. Please report this issue to the Nekosia API [support server](https://discord.gg/Ws3H6wJ4qw) or email us at `contact@nekosia.cat`. Meow~~');
+		.setDescription('We sincerely apologize for the inconvenience. Please report this issue to the Nekosia API [support server](https://discord.gg/Ws3H6wJ4qw) or email us at `support@nekosia.cat`. Meow~~');
 
 	const handleReply = method => inter[method]({ embeds: [embed] }).catch(console.error);
 	if (inter.replied) {
