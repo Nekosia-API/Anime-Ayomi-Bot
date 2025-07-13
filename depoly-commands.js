@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('env-native').config();
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 const { readdirSync, existsSync, writeFileSync } = require('node:fs');

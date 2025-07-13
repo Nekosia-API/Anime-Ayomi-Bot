@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('env-native').config();
 const { Client, Events, Collection } = require('discord.js');
 const setActivity = require('./scripts/setActivity.js');
 
