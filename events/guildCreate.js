@@ -11,8 +11,8 @@ module.exports = {
 			.setAuthor({ name: 'Thank you for adding 💗', iconURL: server.iconURL() })
 			.addFields([
 				{ name: '» Official Website', value: '> https://nekosia.cat' },
-				{ name: '» More Info', value: '> [nekosia.cat/ayomi](https://nekosia.cat/ayomi)', inline: true },
-				{ name: '» Commands', value: '> [nekosia.cat/ayomi/commands](https://nekosia.cat/ayomi/commands)', inline: true },
+				{ name: '» More Info', value: '> [Click here](https://nekosia.cat/discord/ayomi)', inline: true },
+				{ name: '» Commands', value: '> [Click here](https://nekosia.cat/discord/ayomi/commands)', inline: true },
 				{ name: '» Our Discord Server', value: '> https://discord.gg/Ws3H6wJ4qw' },
 				{ name: '» Upvote & Review', value: 'If you\'re enjoying Ayomi, please consider leaving [a review](https://top.gg/bot/1282807473769680938#reviews) and [upvoting](https://top.gg/bot/1282807473769680938/vote) it on Top.gg!' },
 			])
