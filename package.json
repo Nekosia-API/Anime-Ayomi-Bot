@@ -24,8 +24,8 @@
     "env-native": "^1.1.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.32.0",
-    "discord-api-types": "^0.38.18",
+    "@eslint/js": "^9.33.0",
+    "discord-api-types": "^0.38.20",
     "globals": "^16.3.0"
   }
 }
