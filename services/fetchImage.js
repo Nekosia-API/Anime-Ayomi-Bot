@@ -23,13 +23,13 @@ module.exports = async (inter, category) => {
 	try {
 		const compressed = inter.options.getBoolean('compressed') || false;
 		const data = await NekosiaAPI.fetchCategoryImages(category, { session: 'id', id: userId, count });
-		const images = Array.isArray(data) ? data : [data];
 
-		const embeds = images.map(({ image, colors, attribution }) => {
+		const images = count === 1 ? [data] : data.images;
+		const embeds = images.map(({ image, colors, source, attribution }) => {
 			const embed = new EmbedBuilder()
 				.setImage(image[compressed ? 'compressed' : 'original'].url)
 				.setColor(colors.main);
-			if (count > 1 && attribution?.copyright) embed.setFooter({ text: attribution.copyright });
+			if (count > 1) embed.setFooter({ text: attribution.copyright || source.url, iconURL: 'https://nekosia.cat/favicon.png' });
 			return embed;
 		});
 
