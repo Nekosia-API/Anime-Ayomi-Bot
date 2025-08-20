@@ -1,5 +1,5 @@
 const { EmbedBuilder, MessageFlags } = require('discord.js');
-const axios = require('./axios.js');
+const { NekosiaAPI } = require('nekosia.js');
 const sendError = require('../scripts/error.js');
 
 const cooldowns = new Map();
@@ -7,9 +7,9 @@ const BASE_COOLDOWN = 1200, MAX_COOLDOWN = 60000;
 
 module.exports = async (inter, category) => {
 	const now = Date.now();
+	const count = inter.options.getInteger('count') || 1;
 
 	// Cooldown
-	const count = inter.options.getInteger('count') || 1;
 	const cooldown = Math.min(BASE_COOLDOWN * count, MAX_COOLDOWN);
 	const userId = inter.user.id;
 	const lastUsed = cooldowns.get(userId);
@@ -21,12 +21,10 @@ module.exports = async (inter, category) => {
 
 	// Fetch
 	try {
-		const { data } = await axios.get(`${process.env.API_URL}/api/v1/images/${category}`, {
-			params: { session: 'id', id: userId, count },
-		});
-
 		const compressed = inter.options.getBoolean('compressed') || false;
-		const images = data.images || [data];
+		const data = await NekosiaAPI.fetchCategoryImages(category, { session: 'id', id: userId, count });
+		const images = Array.isArray(data) ? data : [data];
+
 		const embeds = images.map(({ image, colors, attribution }) => {
 			const embed = new EmbedBuilder()
 				.setImage(image[compressed ? 'compressed' : 'original'].url)
