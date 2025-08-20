@@ -1,4 +1,4 @@
-require('env-native').config();
+require('node:process').loadEnvFile();
 const { Client, Events, Collection } = require('discord.js');
 const setActivity = require('./scripts/setActivity.js');
 
