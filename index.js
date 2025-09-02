@@ -1,4 +1,4 @@
-require('node:process').loadEnvFile();
+process.loadEnvFile();
 const { Client, Events, Collection } = require('discord.js');
 const setActivity = require('./scripts/setActivity.js');
 
