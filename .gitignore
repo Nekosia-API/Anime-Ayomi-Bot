@@ -1,3 +1,5 @@
 node_modules
 .env
 interactions.json
+tools/servers_normal.html
+tools/servers_spam.html

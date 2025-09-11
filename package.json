@@ -14,6 +14,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "generate-report": "node tools/guild-report.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "up": "ncu -u && npm install && npm update && npm audit fix"
   },
