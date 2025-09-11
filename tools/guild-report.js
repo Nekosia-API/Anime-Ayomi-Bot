@@ -82,16 +82,15 @@ const makeCard = (guild, extras = '', showChannelsTop = true) => {
 };
 
 client.on(Events.ClientReady, async c => {
-	console.log(`Logged in as ${c.user.tag} (${c.user.id})`);
+	console.log(`Logged in as ${c.user.tag} [${c.user.id}]`);
 
-	console.log('Fetching guilds (this may take a while)...');
+	console.log('Fetching guilds...');
 	await c.guilds.fetch();
 
-	let normalCards = '', spamCards = '';
-	let normalCount = 0, spamCount = 0;
-
-	console.log(`Processing ${c.guilds.cache.size} guilds...`);
+	console.log(`Found ${c.guilds.cache.size} guilds. Sorting by member count...`);
 	const guildsSorted = [...c.guilds.cache.values()].sort((a, b) => b.memberCount - a.memberCount);
+
+	console.log('Fetching invites for all guilds...');
 	const invitesMap = await Promise.all(
 		guildsSorted.map(async g => {
 			try {
@@ -103,11 +102,10 @@ client.on(Events.ClientReady, async c => {
 		})
 	);
 
-	console.log('Fetching invites for all guilds...');
 	const invitesByGuild = new Map(invitesMap);
-	const normalGuilds = [];
-	const spamGuilds = [];
+	const normalGuilds = [], spamGuilds = [];
 
+	console.log('Classifying servers...');
 	for (const guild of guildsSorted) {
 		const visibleChannels = guild.channels.cache.filter(ch => {
 			const perms = ch.permissionsFor(guild.members.me);
@@ -132,26 +130,26 @@ client.on(Events.ClientReady, async c => {
 		}
 	}
 
-	console.log(`Found ${normalGuilds.length} normal guilds and ${spamGuilds.length} potential spam/farm guilds.`);
+	console.log(`Classification complete: ${normalGuilds.length} normal | ${spamGuilds.length} spam/farm`);
+
+	console.log('Generating HTML reports...');
+	let normalCards = '', spamCards = '';
 	for (const { guild, extras } of normalGuilds) {
-		normalCount++;
 		normalCards += makeCard(guild, extras);
 	}
 	for (const { guild, extras } of spamGuilds) {
-		spamCount++;
 		spamCards += makeCard(guild, extras, false);
 	}
 
-	console.log('Generating HTML files...');
-	const htmlNormal = wrapHtml('Normal servers', '#4ea1ff', normalCards, normalCount);
-	const htmlSpam = wrapHtml('Spam/Farm servers', '#ff4e4e', spamCards, spamCount);
+	const htmlNormal = wrapHtml('Normal servers', '#4ea1ff', normalCards, normalGuilds.length);
+	const htmlSpam = wrapHtml('Spam/Farm servers', '#ff4e4e', spamCards, spamGuilds.length);
 
 	fs.writeFileSync(path.join(path.resolve(), 'tools', 'servers_normal.html'), htmlNormal, 'utf8');
 	fs.writeFileSync(path.join(path.resolve(), 'tools', 'servers_spam.html'), htmlSpam, 'utf8');
 
-	console.log('Files saved: servers_normal.html and servers_spam.html');
+	console.log('Reports saved: tools/servers_normal.html, tools/servers_spam.html');
 	process.exit(0);
 });
 
 console.log('Logging in...');
-client.login(process.env.TOKEN).catch(console.error);
+client.login(process.env.TOKEN).catch(err => console.error('Failed to login:', err));
