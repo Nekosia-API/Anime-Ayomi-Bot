@@ -122,8 +122,8 @@ client.on(Events.ClientReady, async c => {
 	console.log('Generating HTML reports...');
 	let normalCards = '', spamCards = '';
 	for (const { guild, extras } of normalGuilds) normalCards += makeCard(guild, extras);
-	for (const { guild, extras } of spamGuilds) spamCards += makeCard(guild, extras, false);
 	const htmlNormal = wrapHtml('Normal servers', '#4ea1ff', normalCards, normalGuilds.length);
+	for (const { guild, extras } of spamGuilds) spamCards += makeCard(guild, extras, false);
 	const htmlSpam = wrapHtml('Spam/Farm servers', '#ff4e4e', spamCards, spamGuilds.length);
 
 	fs.writeFileSync(path.join(path.resolve(), 'tools', 'servers_normal.html'), htmlNormal, 'utf8');
