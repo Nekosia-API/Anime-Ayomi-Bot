@@ -1,15 +1,9 @@
-/*
- * A script that generates an HTML report of the Discord servers your bot is in.
- * It separates normal servers from potential spam or farm servers based on the number of visible channels.
- * Such servers always have around 20 or more bots added to artificially inflate member counts and then use Disboard to promote other servers.
- *
- * Examples can be found in the same folder as this file. Ayomi automatically leaves such a server.
- */
-
 process.loadEnvFile();
+
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
+const classifyGuild = require('./classifyGuild.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -35,7 +29,6 @@ const baseStyles = `
 	a{color:#4ea1ff;text-decoration:none}
 	a:hover{text-decoration:underline}`;
 
-
 const wrapHtml = (title, color, body, count) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -57,12 +50,11 @@ const makeCard = (guild, extras = '', showChannelsTop = true) => {
 	const bannerHtml = bannerUrl
 		? `<div class="banner" style="background-image:url('${bannerUrl}')"></div>`
 		: '';
-	const avatarClass = bannerUrl ? 'with-banner' : 'no-banner';
 
 	return `
     <div class="guild">
         ${bannerHtml}
-        <img src="${iconUrl}" alt="Server icon" class="guild-avatar ${avatarClass}">
+        <img src="${iconUrl}" alt="Server icon" class="guild-avatar ${bannerUrl ? 'with-banner' : 'no-banner'}">
         <div class="guild-content">
             <h2>${guild.name}</h2>
             <p><strong>Server ID:</strong> ${guild.id}</p>
@@ -82,12 +74,10 @@ const makeCard = (guild, extras = '', showChannelsTop = true) => {
 };
 
 client.on(Events.ClientReady, async c => {
-	console.log(`Logged in as ${c.user.tag} [${c.user.id}]`);
-
-	console.log('Fetching guilds...');
+	console.log(`Logged in as ${c.user.tag} (${c.user.id}), fetching guilds...`);
 	await c.guilds.fetch();
 
-	console.log(`Found ${c.guilds.cache.size} guilds. Sorting by member count...`);
+	console.log(`Found ${c.guilds.cache.size} servers, sorting by member count...`);
 	const guildsSorted = [...c.guilds.cache.values()].sort((a, b) => b.memberCount - a.memberCount);
 
 	console.log('Fetching invites for all guilds...');
@@ -107,24 +97,21 @@ client.on(Events.ClientReady, async c => {
 
 	console.log('Classifying servers...');
 	for (const guild of guildsSorted) {
-		const visibleChannels = guild.channels.cache.filter(ch => {
-			const perms = ch.permissionsFor(guild.members.me);
-			return perms && perms.has('ViewChannel');
-		}).size;
-
 		const invites = invitesByGuild.get(guild.id);
 		let inviteLinks = '';
 		if (invites && invites.size > 0) {
 			const top3 = invites.map(i => `<a href="${i.url}" target="_blank">${i.code}</a>`).slice(0, 3);
 			inviteLinks = `<p>${top3.join(', ')}${invites.size > 3 ? '…' : ''}</p>`;
 		}
-
-		if (visibleChannels <= 1) {
-			spamGuilds.push({ guild, extras: `${inviteLinks}<h3>Channels (${guild.channels.cache.size} total, ${visibleChannels} visible):</h3><ul>${guild.channels.cache.map(ch => {
-				const perms = ch.permissionsFor(guild.members.me);
-				const vis = perms && perms.has('ViewChannel') ? '✔ visible' : '✘ hidden';
-				return `<li>${ch.name} (${ch.id}) - <span class="${vis.includes('✔') ? 'visible' : 'hidden'}">${vis}</span></li>`;
-			}).join('')}</ul>` });
+		if (classifyGuild(guild)) {
+			const extras = `${inviteLinks}<h3>Channels (${guild.channels.cache.size} total):</h3><ul>${
+				guild.channels.cache.map(ch => {
+					const perms = ch.permissionsFor(guild.members.me);
+					const vis = perms && perms.has('ViewChannel') ? '✔ visible' : '✘ hidden';
+					return `<li>${ch.name} (${ch.id}) - <span class="${vis.includes('✔') ? 'visible' : 'hidden'}">${vis}</span></li>`;
+				}).join('')
+			}</ul>`;
+			spamGuilds.push({ guild, extras });
 		} else {
 			normalGuilds.push({ guild, extras: inviteLinks });
 		}
@@ -134,22 +121,17 @@ client.on(Events.ClientReady, async c => {
 
 	console.log('Generating HTML reports...');
 	let normalCards = '', spamCards = '';
-	for (const { guild, extras } of normalGuilds) {
-		normalCards += makeCard(guild, extras);
-	}
-	for (const { guild, extras } of spamGuilds) {
-		spamCards += makeCard(guild, extras, false);
-	}
-
+	for (const { guild, extras } of normalGuilds) normalCards += makeCard(guild, extras);
+	for (const { guild, extras } of spamGuilds) spamCards += makeCard(guild, extras, false);
 	const htmlNormal = wrapHtml('Normal servers', '#4ea1ff', normalCards, normalGuilds.length);
 	const htmlSpam = wrapHtml('Spam/Farm servers', '#ff4e4e', spamCards, spamGuilds.length);
 
 	fs.writeFileSync(path.join(path.resolve(), 'tools', 'servers_normal.html'), htmlNormal, 'utf8');
 	fs.writeFileSync(path.join(path.resolve(), 'tools', 'servers_spam.html'), htmlSpam, 'utf8');
 
-	console.log('Reports saved: tools/servers_normal.html, tools/servers_spam.html');
+	console.log('Reports saved: tools/servers_normal.html & tools/servers_spam.html');
 	process.exit(0);
 });
 
-console.log('Logging in...');
+console.log('Logging in, please wait...');
 client.login(process.env.TOKEN).catch(err => console.error('Failed to login:', err));
