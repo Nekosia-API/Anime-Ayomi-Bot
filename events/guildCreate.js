@@ -2,13 +2,13 @@ const { Events, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	name: Events.GuildCreate,
-	async execute(server, client) {
-		if (!server.available) return;
+	async execute(guild, client) {
+		if (!guild.available) return;
 
-		const owner = await client.users.fetch(server.ownerId);
+		const owner = await client.users.fetch(guild.ownerId);
 		owner.send({ embeds: [new EmbedBuilder()
 			.setColor('#584e51')
-			.setAuthor({ name: 'Thank you for adding 💗', iconURL: server.iconURL() })
+			.setAuthor({ name: 'Thank you for adding 💗', iconURL: guild.iconURL() })
 			.addFields([
 				{ name: '» Official Website', value: '> https://nekosia.cat' },
 				{ name: '» More Info', value: '> [Click here](https://nekosia.cat/discord/ayomi)', inline: true },
@@ -19,10 +19,10 @@ module.exports = {
 			.setThumbnail(client.user.displayAvatarURL())],
 		}).catch(err => console.log('NoelCL » Message for adding the bot was not delivered.', err.message));
 
-		console.log(`NoelCL » Bot added to: '${server.name}' (${server.id}); Members: ${server.members.cache.size}; Owner: '${owner.tag}' (${owner.id})`);
+		console.log(`NoelCL » Bot added to: '${guild.name}' (${guild.id}); Members: ${guild.members.cache.size}; Owner: '${owner.tag}' (${owner.id})`);
 
 		client.channels.cache.get(process.env.BOT_LOGS).send(
-			`\\✅ » Added to: **${server.name}** \`${server.id}\`; Users: **${server.members.cache.filter(m => !m.user.bot).size}**>**${server.members.cache.size}**; Owner: **${owner.tag}** \`${owner.id}\`; Servers: **${client.guilds.cache.size}**;`
+			`\\✅ » Added to: **${guild.name}** \`${guild.id}\`; Users: **${guild.members.cache.filter(m => !m.user.bot).size}**>**${guild.members.cache.size}**; Owner: **${owner.tag}** \`${owner.id}\`; Servers: **${client.guilds.cache.size}**;`
 		).catch(err => console.warn('GAdded » Message (guildCreate) did not reach the info server.', err.message));
 	},
 };
