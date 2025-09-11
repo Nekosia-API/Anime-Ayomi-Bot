@@ -3,7 +3,7 @@ process.loadEnvFile();
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const classifyGuild = require('./classifyGuild.js');
+const classifyGuild = require('../scripts/classifyGuild.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
