@@ -18,13 +18,13 @@
     "up": "ncu -u && npm install && npm update && npm audit fix"
   },
   "dependencies": {
-    "@discordjs/rest": "^2.5.1",
-    "discord.js": "^14.21.0",
+    "@discordjs/rest": "^2.6.0",
+    "discord.js": "^14.22.1",
     "nekosia.js": "^0.2.4"
   },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
-    "discord-api-types": "^0.38.20",
-    "globals": "^16.3.0"
+    "@eslint/js": "^9.35.0",
+    "discord-api-types": "^0.38.24",
+    "globals": "^16.4.0"
   }
 }
