@@ -3,7 +3,7 @@ process.loadEnvFile();
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const classifyGuild = require('../scripts/classifyGuild.js');
+const isSpamGuild = require('../scripts/classifyGuild.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -101,9 +101,9 @@ client.on(Events.ClientReady, async c => {
 		let inviteLinks = '';
 		if (invites && invites.size > 0) {
 			const top3 = invites.map(i => `<a href="${i.url}" target="_blank">${i.code}</a>`).slice(0, 3);
-			inviteLinks = `<p>${top3.join(', ')}${invites.size > 3 ? '…' : ''}</p>`;
+			inviteLinks = `<p>${top3.join(', ')}${invites.size > 3 ? '...' : ''}</p>`;
 		}
-		if (classifyGuild(guild)) {
+		if (isSpamGuild(guild)) {
 			const extras = `${inviteLinks}<h3>Channels (${guild.channels.cache.size} total):</h3><ul>${
 				guild.channels.cache.map(ch => {
 					const perms = ch.permissionsFor(guild.members.me);
