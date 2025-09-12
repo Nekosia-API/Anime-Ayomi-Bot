@@ -4,8 +4,10 @@ const { Client, Events, GatewayIntentBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const isSpamGuild = require('../scripts/classifyGuild.js');
+const spamGuildEmbed = require('../scripts/spamGuildEmbed.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const leaveSpam = process.argv.includes('--leave-spam');
 
 const baseStyles = `
 	body{background:#121212;color:#e0e0e0;font-family:'Segoe UI',sans-serif;margin:0;padding:40px}
@@ -45,8 +47,8 @@ const wrapHtml = (title, color, body, count) => `
 </html>`;
 
 const makeCard = (guild, extras = '', showChannelsTop = true) => {
-	const bannerUrl = guild.bannerURL() || null;
-	const iconUrl = guild.iconURL() || 'https://noel.sefinek.net/images/null.jpg';
+	const bannerUrl = guild.bannerURL({ size: 256 }) || '';
+	const iconUrl = guild.iconURL({ size: 128 }) || '';
 	const bannerHtml = bannerUrl
 		? `<div class="banner" style="background-image:url('${bannerUrl}')"></div>`
 		: '';
@@ -80,6 +82,22 @@ client.on(Events.ClientReady, async c => {
 	console.log(`Found ${c.guilds.cache.size} servers, sorting by member count...`);
 	const guildsSorted = [...c.guilds.cache.values()].sort((a, b) => b.memberCount - a.memberCount);
 
+	if (leaveSpam) {
+		console.log('Leave-spam mode enabled. Bot will leave all spammy/farm guilds...');
+
+		for (const guild of guildsSorted) {
+			if (!isSpamGuild(guild)) continue;
+
+			const channel = await spamGuildEmbed(client, guild, true);
+			console.log(`Leaving spammy guild: '${guild.name}' (${guild.id}); Channel: ${channel ? channel.name : 'N/A'}`);
+
+			await guild.leave().catch(() => console.warn(`Could not leave '${guild.name}'`));
+		}
+
+		console.log('Kick-now complete. Exiting process.');
+		return process.exit(0);
+	}
+
 	console.log('Fetching invites for all guilds...');
 	const invitesMap = await Promise.all(
 		guildsSorted.map(async g => {
@@ -103,6 +121,7 @@ client.on(Events.ClientReady, async c => {
 			const top3 = invites.map(i => `<a href="${i.url}" target="_blank">${i.code}</a>`).slice(0, 3);
 			inviteLinks = `<p>${top3.join(', ')}${invites.size > 3 ? '...' : ''}</p>`;
 		}
+
 		if (isSpamGuild(guild)) {
 			const extras = `${inviteLinks}<h3>Channels (${guild.channels.cache.size} total):</h3><ul>${
 				guild.channels.cache.map(ch => {

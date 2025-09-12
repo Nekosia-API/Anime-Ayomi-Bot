@@ -1,7 +1,8 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const isSpamGuild = require('../scripts/classifyGuild.js');
-const getGuildStats = require('../scripts/getGuildStats.js');
+const spamGuildEmbed = require('../scripts/spamGuildEmbed.js');
 const formatGuildChannels = require('../scripts/formatGuildChannels.js');
+const getGuildStats = require('../scripts/getGuildStats.js');
 
 module.exports = {
 	name: Events.GuildCreate,
@@ -10,40 +11,18 @@ module.exports = {
 
 		if (isSpamGuild(guild)) {
 			let sentChannel = null;
-
-			const channel = guild.channels.cache.find(ch =>
-				ch.isTextBased() &&
-				ch.permissionsFor(guild.members.me).has(['ViewChannel', 'SendMessages'])
-			);
-
-			if (channel) {
-				const embed = new EmbedBuilder()
-					.setColor('#ff4e4e')
-					.setAuthor({ name: 'Opuszczam ten serwer, sayonara! 👋', iconURL: guild.iconURL(), url: 'https://nekosia.cat' })
-					.setDescription(
-						'Pfff. Ten serwer śmierdzi. Nie mam zamiaru brać udziału w sztucznym nabijaniu statystyk. ' +
-						'Zakładam, że został stworzony tylko po to, aby wypromować inny serwer przy użyciu Disboarda.\n\n' +
-						'Jeśli uważasz, że mój osąd jest błędny (w co wątpię), jedyna droga to kontakt z moim deweloperem poprzez [serwer wsparcia](https://nekosia.cat/discord) albo mail `support@nekosia.cat`. Pa!'
-					)
-					.setFooter({ text: client.user.username, iconURL: client.user.displayAvatarURL() })
-					.setTimestamp();
-
-				await channel.send({ embeds: [embed] }).catch(() => {});
-				sentChannel = channel;
-			}
+			sentChannel = await spamGuildEmbed(client, guild, true);
 
 			const channelsCount = guild.channels.cache.size;
 			const botsCount = guild.members.cache.filter(m => m.user.bot).size;
-			const channelList = formatGuildChannels(guild, { sentChannel });
+			console.log(`Client » Left spammy guild: '${guild.name}' (${guild.id}); Bots: ${botsCount}; Channels: ${channelsCount}`);
 
-			await guild.leave().catch(() => {});
-
-			console.log(`Client » Left spammy guild: '${guild.name}' (${guild.id}); Channels: ${channelsCount}; Bots: ${botsCount}`);
-
-			return client.channels.cache.get(process.env.BOT_LOGS)?.send(
+			client.channels.cache.get(process.env.BOT_LOGS)?.send(
 				`⚠️ » Left spammy guild: **${guild.name}** \`${guild.id}\`; Members: \`${guild.memberCount}\`; Channels: \`${channelsCount}\`; Bots: \`${botsCount}\`;\n` +
-				'```' + channelList + '```'
+				'```' + formatGuildChannels(guild, { sentChannel }) + '```'
 			);
+
+			return guild.leave();
 		}
 
 		const owner = await client.users.fetch(guild.ownerId);
