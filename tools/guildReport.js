@@ -94,7 +94,6 @@ client.on(Events.ClientReady, async c => {
 			await guild.leave().catch(() => console.warn(`Could not leave '${guild.name}'`));
 		}
 
-		console.log('Kick-now complete. Exiting process.');
 		return process.exit(0);
 	}
 
