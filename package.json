@@ -14,10 +14,10 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "m": "ncu -u && npm install && npm update",
     "spam:leave": "node tools/guildReport.js --leave-spam",
     "spam:report": "node tools/guildReport.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "up": "ncu -u && npm install && npm update && npm audit fix"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@discordjs/rest": "^2.6.0",
