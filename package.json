@@ -21,12 +21,12 @@
   },
   "dependencies": {
     "@discordjs/rest": "^2.6.0",
-    "discord.js": "^14.22.1",
+    "discord.js": "^14.25.1",
     "nekosia.js": "^0.2.4"
   },
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
-    "discord-api-types": "^0.38.24",
-    "globals": "^16.4.0"
+    "@eslint/js": "^9.39.2",
+    "discord-api-types": "^0.38.37",
+    "globals": "^16.5.0"
   }
 }
