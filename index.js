@@ -8,7 +8,7 @@ client.interactions = new Collection();
 client.cooldowns = new Collection();
 
 // Load event and slash command handlers
-['./handlers/event.js', './handlers/interactions.js'].forEach(handler => require(handler)(client));
+['./handlers/events.js', './handlers/interactions.js'].forEach(handler => require(handler)(client));
 
 // Shard events
 client.on(Events.ShardDisconnect, (event, id) => console.warn(`Shard${id} » Disconnected unexpectedly. Event:`, event));
