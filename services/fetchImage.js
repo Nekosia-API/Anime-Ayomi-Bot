@@ -21,10 +21,15 @@ module.exports = async (inter, category) => {
 
 	// Fetch
 	try {
-		const compressed = inter.options.getBoolean('compressed') || false;
 		const data = await NekosiaAPI.fetchCategoryImages(category, { session: 'id', id: userId, count });
+		if (!data || (count > 1 && !data.images?.length)) {
+			console.warn(`FhImgs » Empty response for category '${category}'; User: ${userId}; Count: ${count}; Data:`, data);
+			return inter.reply({ content: '❌  No images found for this category. Please try again later.', flags: MessageFlags.Ephemeral });
+		}
 
+		const compressed = inter.options.getBoolean('compressed') || false;
 		const images = count === 1 ? [data] : data.images;
+
 		const embeds = images.map(({ image, colors, source, attribution }) => {
 			const embed = new EmbedBuilder()
 				.setImage(image[compressed ? 'compressed' : 'original'].url)
