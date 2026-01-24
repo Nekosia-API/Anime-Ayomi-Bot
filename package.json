@@ -1,6 +1,6 @@
 {
   "name": "ayomi",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "homepage": "https://nekosia.cat/discord/ayomi",
   "bugs": {
     "url": "https://github.com/Nekosia-API/Anime-Ayomi-Bot/issues"
@@ -27,6 +27,6 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "discord-api-types": "^0.38.37",
-    "globals": "^16.5.0"
+    "globals": "^17.1.0"
   }
 }
