@@ -15,4 +15,7 @@ client.on(Events.ShardDisconnect, (event, id) => console.warn(`Shard${id} » Dis
 client.on(Events.ShardResume, () => setActivity(client.user));
 
 // Login
-client.login(process.env.TOKEN).catch(console.error);
+client.login(process.env.TOKEN).catch(err => {
+	console.error('Client » Login failed:', err.message);
+	process.exit(1);
+});
