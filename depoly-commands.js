@@ -1,4 +1,4 @@
-require('env-native').config();
+process.loadEnvFile();
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 const { readdirSync, existsSync, writeFileSync } = require('node:fs');
