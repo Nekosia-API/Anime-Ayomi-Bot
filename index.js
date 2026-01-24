@@ -12,10 +12,7 @@ client.cooldowns = new Collection();
 
 // Shard events
 client.on(Events.ShardDisconnect, (event, id) => console.warn(`Shard${id} » Disconnected unexpectedly. Event:`, event));
-client.on(Events.ShardResume, async (id, events) => {
-	await setActivity(client.user);
-	console.info(`Shard${id} » Resumed. Replayed events:`, events);
-});
+client.on(Events.ShardResume, () => setActivity(client.user));
 
 // Login
 client.login(process.env.TOKEN).catch(console.error);
