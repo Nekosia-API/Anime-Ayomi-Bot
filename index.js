@@ -14,7 +14,7 @@ client.cooldowns = new Collection();
 client.on(Events.ShardDisconnect, (event, id) => console.warn(`Shard${id} » Disconnected unexpectedly. Event:`, event));
 client.on(Events.ShardResume, () => setActivity(client.user));
 
-// Login
+// Run client
 client.login(process.env.TOKEN).catch(err => {
 	console.error('Client » Login failed:', err.message);
 	process.exit(1);
