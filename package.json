@@ -17,7 +17,8 @@
     "m": "ncu -u && npm install && npm update",
     "spam:leave": "node tools/guildReport.js --leave-spam",
     "spam:report": "node tools/guildReport.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "update": "npm run pull && npm ci --omit=dev && pm2 restart ayomi"
   },
   "dependencies": {
     "@discordjs/rest": "^2.6.0",
