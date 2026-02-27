@@ -15,6 +15,7 @@
   "main": "index.js",
   "scripts": {
     "m": "ncu -u && npm install && npm update",
+    "pull": "git pull origin main && git submodule update --init",
     "spam:leave": "node tools/guildReport.js --leave-spam",
     "spam:report": "node tools/guildReport.js",
     "test": "echo \"Error: no test specified\" && exit 1",
