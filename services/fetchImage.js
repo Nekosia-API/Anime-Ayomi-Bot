@@ -5,6 +5,13 @@ const sendError = require('../scripts/error.js');
 const cooldowns = new Map();
 const BASE_COOLDOWN = 1200, MAX_COOLDOWN = 60000;
 
+setInterval(() => {
+	const now = Date.now();
+	for (const [id, ts] of cooldowns) {
+		if (now - ts > MAX_COOLDOWN) cooldowns.delete(id);
+	}
+}, 60000);
+
 module.exports = async (inter, category) => {
 	const now = Date.now();
 	const count = inter.options.getInteger('count') || 1;
@@ -27,7 +34,7 @@ module.exports = async (inter, category) => {
 			return inter.reply({ content: '❌  No images found for this category. Please try again later.', flags: MessageFlags.Ephemeral });
 		}
 
-		const compressed = inter.options.getBoolean('compressed') || false;
+		const compressed = inter.options.getBoolean('compressed') ?? false;
 		const images = count === 1 ? [data] : data.images;
 
 		const embeds = images.map(({ image, colors, source, attribution }) => {

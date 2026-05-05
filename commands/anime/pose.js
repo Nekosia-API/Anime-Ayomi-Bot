@@ -29,11 +29,7 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.AttachFiles),
 
 	execute: async (_, inter) => {
-		let tag = inter.options.getString('type');
-		if (!tag) {
-			const randomChoice = poseChoices[Math.floor(Math.random() * poseChoices.length)];
-			tag = randomChoice.value;
-		}
+		const tag = inter.options.getString('type') ?? poseChoices[Math.floor(Math.random() * poseChoices.length)].value;
 		await fetchImage(inter, tag);
 	},
 };

@@ -5,7 +5,6 @@ const setActivity = require('./scripts/setActivity.js');
 // Init client and collections
 const client = new Client({ intents: [1] });
 client.interactions = new Collection();
-client.cooldowns = new Collection();
 
 // Load event and slash command handlers
 ['./handlers/events.js', './handlers/interactions.js'].forEach(handler => require(handler)(client));

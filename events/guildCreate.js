@@ -10,8 +10,7 @@ module.exports = {
 		if (!guild.available) return;
 
 		if (isSpamGuild(guild)) {
-			let sentChannel = null;
-			sentChannel = await spamGuildEmbed(client, guild, true);
+			const sentChannel = await spamGuildEmbed(client, guild, true);
 
 			const channelsCount = guild.channels.cache.size;
 			const botsCount = guild.members.cache.filter(m => m.user.bot).size;
@@ -42,7 +41,7 @@ module.exports = {
 		const { users, bots, total } = getGuildStats(guild);
 		console.log(`Client » Added to: '${guild.name}' (${guild.id}); Users: ${users}; Bots: ${bots}; Total: ${total}; Owner: '${owner.tag}' (${owner.id})`);
 
-		client.channels.cache.get(process.env.BOT_LOGS).send(
+		client.channels.cache.get(process.env.BOT_LOGS)?.send(
 			`<a:success:1410585401466425364> » **${guild.name}** \`${guild.id}\`; Users: \`${users}\`; Bots: \`${bots}\`; Total: \`${total}\`; Owner: **${owner.tag}** \`${owner.id}\`; Servers: **${client.guilds.cache.size}**;`
 		).catch(err => console.warn('GAdded » Message (guildCreate) did not reach the info server.', err.message));
 	},
