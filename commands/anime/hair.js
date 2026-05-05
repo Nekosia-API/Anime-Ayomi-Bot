@@ -26,7 +26,6 @@ const choices = [
 	{ name: 'Straight Fringe', value: 'straight-fringe' },
 	{ name: 'Half-Up Hairstyle', value: 'half-up-hairstyle' },
 	{ name: 'Half Pigtails', value: 'half-pigtails' },
-	{ name: 'Hairstyle Change', value: 'hairstyle-change' },
 ];
 
 module.exports = {

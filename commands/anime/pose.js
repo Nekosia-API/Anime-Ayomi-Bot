@@ -3,12 +3,10 @@ const fetchImage = require('../../services/fetchImage.js');
 
 const poseChoices = [
 	{ name: 'Crossed Legs', value: 'crossed-legs' },
-	{ name: 'Reverse Sitting', value: 'reverse-sitting' },
 	{ name: 'W Sitting', value: 'w-sitting' },
 	{ name: 'Sitting', value: 'sitting' },
 	{ name: 'Lying Down', value: 'lying-down' },
 	{ name: 'Lying on One Side', value: 'lying-on-one-side' },
-	{ name: 'Tongue Out', value: 'tongue-out' },
 	{ name: 'Pinching Garments', value: 'pinching-garments' },
 ];
 
