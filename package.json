@@ -21,6 +21,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "update": "npm run pull && npm ci --omit=dev && pm2 restart ayomi"
   },
+  "overrides": {
+    "undici": "6"
+  },
   "dependencies": {
     "@discordjs/rest": "^2.6.1",
     "discord.js": "^14.26.4",
@@ -28,7 +31,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "discord-api-types": "^0.38.47",
+    "discord-api-types": "^0.38.49",
     "globals": "^17.6.0"
   }
 }
