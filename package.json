@@ -25,13 +25,13 @@
     "undici": "6"
   },
   "dependencies": {
-    "@discordjs/rest": "^2.6.1",
-    "discord.js": "^14.26.4",
-    "nekosia.js": "^0.2.9"
+    "@discordjs/rest": "^2.6.3",
+    "discord.js": "^14.27.0",
+    "nekosia.js": "^0.2.10"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "discord-api-types": "^0.38.49",
-    "globals": "^17.6.0"
+    "discord-api-types": "^0.38.56",
+    "globals": "^17.13.0"
   }
 }
