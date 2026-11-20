@@ -3,29 +3,24 @@ module.exports = {
 		name: 'ayomi',
 		script: './index.js',
 
-		// Configuration options
-		exec_mode: 'fork',
-		max_memory_restart: '2G',
-
-		// Monitoring changes in files and restarting the application
-		watch: false,
-		ignore_watch: ['.git', 'node_modules', 'logs', 'eslint.config.mjs', 'ecosystem.config.js'],
-
-		// Logging settings
+		// Logging configuration
 		log_date_format: 'HH:mm:ss.SSS DD.MM.YYYY',
 		merge_logs: true,
-		log_file: '/home/sefinek/logs/bots/ayomi/combined.log',
-		out_file: '/home/sefinek/logs/bots/ayomi/out.log',
-		error_file: '/home/sefinek/logs/bots/ayomi/error.log',
+		log_file: '~/logs/bots/ayomi/combined.log',
+		out_file: '~/logs/bots/ayomi/out.log',
+		error_file: '~/logs/bots/ayomi/error.log',
 
-		// Application restart policy
+		// Application restart policy settings
 		wait_ready: true,
+		listen_timeout: 30000,
+		kill_timeout: 10000,
 		autorestart: true,
-		max_restarts: 4,
-		restart_delay: 4000,
-		min_uptime: 3000,
+		max_restarts: 10,
+		min_uptime: 30000,
+		restart_delay: 5000,
+		max_memory_restart: '2G',
 
-		// Environment variables
+		// Environment variables configuration
 		env: {
 			NODE_ENV: 'production',
 		},
