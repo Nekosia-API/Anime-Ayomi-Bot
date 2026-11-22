@@ -1,6 +1,7 @@
 {
   "name": "ayomi",
   "version": "1.2.3",
+  "private": true,
   "homepage": "https://nekosia.cat/discord/ayomi",
   "bugs": {
     "url": "https://github.com/Nekosia-API/Anime-Ayomi-Bot/issues"
